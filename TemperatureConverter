@@ -1,0 +1,117 @@
+import java.util.Scanner;
+
+public class TemperatureConverter {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+
+            System.out.println("\n===== TEMPERATURE CONVERTER =====");
+            System.out.println("1. Celsius to Fahrenheit");
+            System.out.println("2. Fahrenheit to Celsius");
+            System.out.println("3. Celsius to Kelvin");
+            System.out.println("4. Kelvin to Celsius");
+            System.out.println("5. Fahrenheit to Kelvin");
+            System.out.println("6. Kelvin to Fahrenheit");
+            System.out.println("7. Exit");
+
+            System.out.print("Enter your choice: ");
+
+            if (!sc.hasNextInt()) {
+                System.out.println("Invalid choice! Enter a number.");
+                sc.nextLine();
+                continue;
+            }
+
+            int choice = sc.nextInt();
+
+            if (choice == 7) {
+                System.out.println("Thank you for using Temperature Converter!");
+                break;
+            }
+
+            if (choice < 1 || choice > 6) {
+                System.out.println("Invalid choice! Try again.");
+                continue;
+            }
+
+            System.out.print("Enter temperature: ");
+
+            if (!sc.hasNextDouble()) {
+                System.out.println("Invalid temperature!");
+                sc.nextLine();
+                continue;
+            }
+
+            double temp = sc.nextDouble();
+            double result = 0;
+            String unit = "";
+            boolean valid = true;
+
+            switch (choice) {
+
+                case 1:
+                    if (temp < -273.15)
+                        valid = false;
+                    else
+                        result = (temp * 9 / 5) + 32;
+                    unit = "Fahrenheit";
+                    break;
+
+                case 2:
+                    if (temp < -459.67)
+                        valid = false;
+                    else
+                        result = (temp - 32) * 5 / 9;
+                    unit = "Celsius";
+                    break;
+
+                case 3:
+                    if (temp < -273.15)
+                        valid = false;
+                    else
+                        result = temp + 273.15;
+                    unit = "Kelvin";
+                    break;
+
+                case 4:
+                    if (temp < 0)
+                        valid = false;
+                    else
+                        result = temp - 273.15;
+                    unit = "Celsius";
+                    break;
+
+                case 5:
+                    if (temp < -459.67)
+                        valid = false;
+                    else
+                        result = (temp - 32) * 5 / 9 + 273.15;
+                    unit = "Kelvin";
+                    break;
+
+                case 6:
+                    if (temp < 0)
+                        valid = false;
+                    else
+                        result = (temp - 273.15) * 9 / 5 + 32;
+                    unit = "Fahrenheit";
+                    break;
+            }
+
+            if (!valid) {
+                System.out.println("Temperature cannot be below absolute zero.");
+            } else if (!Double.isFinite(result)) {
+                System.out.println("Temperature is outside the supported range.");
+            } else {
+                System.out.printf(
+                        "Converted Temperature: %.2f %s%n",
+                        result, unit);
+            }
+        }
+
+        sc.close();
+    }
+}
